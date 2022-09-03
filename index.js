@@ -27,8 +27,8 @@ async function updateButton() {
     }
 }
 
-async function fund(ethAmount) {
-    ethAmount = document.getElementById("amount").value
+async function fund() {
+    const ethAmount = document.getElementById("amount").value
     if (window.ethereum) {
         //need provider -> connection to the blockchain
         //signer -> the wallet owner
