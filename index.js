@@ -1,5 +1,5 @@
 //import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
-import { ethers } from "./ethers-5.2.esm.min.js"
+import { ethers } from "./ethers-5.6.esm.min.js"
 import { abi, contractAddress } from "./constants.js"
 
 const connectButton = document.getElementById("connectionStat")
@@ -27,9 +27,9 @@ async function updateButton() {
     }
 }
 
-async function fund() {
+/*async function fund() {
     const ethAmount = document.getElementById("amount").value
-    if (window.ethereum) {
+    if (typeof window.ethereum !== "undefined") {
         //need provider -> connection to the blockchain
         //signer -> the wallet owner
         // contract that we are interacting with
@@ -49,6 +49,26 @@ async function fund() {
         await contract.fund({ value: ethers.utils.parseEther(ethAmount) })
         //console.log(`Funder: ${await contract.getFunder(0)}`)
     }
+}*/
+
+async function fund() {
+  const ethAmount = document.getElementById("amount").value
+  console.log(`Funding with ${ethAmount}...`)
+  if (typeof window.ethereum !== "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    const contract = new ethers.Contract(contractAddress, abi, signer)
+    try {
+      const transactionResponse = await contract.fund({
+        value: ethers.utils.parseEther(ethAmount),
+      })
+      // await listenForTransactionMine(transactionResponse, provider)
+    } catch (error) {
+      console.log(error)
+    }
+  } else {
+    fundButton.innerHTML = "Please install MetaMask"
+  }
 }
 
 let currentAddress = 0
