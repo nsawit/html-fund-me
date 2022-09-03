@@ -1,14 +1,14 @@
 //import { ethers } from "https://cdn.ethers.io/lib/ethers-5.2.esm.min.js"
-import { ethers } from "./ethers-5.2.esm.min.js"
+import { ethers } from "./ethers-5.6.esm.min.js"
 import { abi, contractAddress } from "./constants.js"
 
 const connectButton = document.getElementById("connectionStat")
 const fundButton = document.getElementById("fundBtn")
-const amountField = document.getElementById("amount")
+// const amountField = document.getElementById("amount")
 
 connectButton.onclick = connect
 fundButton.onclick = fund
-amountField.onchange = fund
+// amountField.onchange = fund
 
 //console.log(ethers)
 // async function getBalance() {
@@ -46,8 +46,17 @@ async function fund() {
                 ethAmount
             )}`
         )
-        await contract.fund({ value: ethers.utils.parseEther(ethAmount) })
-        //console.log(`Funder: ${await contract.getFunder(0)}`)
+         
+        try {
+            const transactionResponse = await contract.fund({
+                value: ethers.utils.parseEther(ethAmount),
+            });
+
+            await listenForTransactionMine(transactionResponse, provider);
+            console.log("Done!");
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
@@ -78,4 +87,16 @@ async function connect() {
             alert("You are now logged into another account! " + currentAddress)
         }
     })
+}
+
+function listenForTransactionMine(transactionResponse, provider) {
+  console.log(`Mining ${transactionResponse.hash}...`);
+  return new Promise((resolve, reject) => {
+    provider.once(transactionResponse.hash, (transactionReciept) => {
+      console.log(
+        `Completed with ${transactionReciept.confirmations} confirmations.`
+      );
+      resolve();
+    });
+  });
 }
