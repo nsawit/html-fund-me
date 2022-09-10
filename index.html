@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
     <title>Fund Me</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>FundMe App</h1>
-    <button id="connectionStat">Connect</button>
-    <button id="fundBtn">Add fund</button>
-    <input type="text" id="amount">
-    <script src="./index.js" type="module"></script>
+    <div id="signIn">
+        <h1>FundMe App</h1>
+        <button id="connectionStat">Connect</button>
+    </div>
+    <div id="div2">
+        <hr>
+        <button id="fundBtn">Add fund</button>
+        <input type="text" id="amount" placeholder="0.1 ETH"/> 
+        <button id="withdrawBtn">Withdraw fund</button>
+        <input type="text" id="withdraw"> 
+        <button id="getBalance"> Check Balance</button>
+        <label id="balanceLabel"></label>
+    </div>
+    
+    <script src="./index.js" type="module" async></script>
 </body>
 </html>

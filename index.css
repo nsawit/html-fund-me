@@ -1,0 +1,17 @@
+h1{
+    display: inline;
+}
+
+#div2 > #getBalance{
+    display: block;
+    margin-top: 3px;
+}
+
+#div2 > #withdrawBtn{
+    display: inline-block;
+    margin-top: 3px;
+}
+
+#div2 > label{
+    display: inline-block;
+}

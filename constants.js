@@ -124,7 +124,7 @@ export const abi = [
         inputs: [],
         name: "withdraw",
         outputs: [],
-        stateMutability: "nonpayable",
+        stateMutability: "payable",
         type: "function",
     },
 ]
